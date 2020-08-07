@@ -1,0 +1,73 @@
+{
+  "name": "loadx",
+  "version": "0.0.1",
+  "description": "Load image, video, CSS, and JavaScript files, using the Promise API,",
+  "source": "src/index.js",
+  "main": "dist/loadx.js",
+  "umd:main": "dist/loadx.umd.js",
+  "module": "dist/loadx.module.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "microbundle && tsc",
+    "test": "npm run format:check && eslint src test && karmatic",
+    "release": "npm t && git commit -am \"$npm_package_version\" && git tag $npm_package_version && git push && git push --tags && npm publish",
+    "format": "prettier --write './**/*.{js,json,yml,md}'",
+    "format:check": "prettier --check './**/*.{js,json,yml,md}'"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "developit",
+      "prettier"
+    ],
+    "rules": {
+      "jest/no-jasmine-globals": "off"
+    }
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "trailingComma": "none",
+    "singleQuote": true,
+    "endOfLine": "lf",
+    "useTabs": true,
+    "printWidth": 120,
+    "overrides": [
+      {
+        "files": "**/*.json",
+        "options": {
+          "parser": "json-stringify",
+          "useTabs": false,
+          "tabWidth": 2
+        }
+      }
+    ]
+  },
+  "repository": "cesarwbr/loadx",
+  "keywords": [
+    "load",
+    "async",
+    "promise",
+    "assets"
+  ],
+  "author": "Cesar William <cesarwbr@gmail.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/cesarwbr/loadx",
+  "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "core-js": "2.6.11",
+    "eslint": "^7.6.0",
+    "eslint-config-developit": "^1.2.0",
+    "eslint-config-prettier": "6.11.0",
+    "file-loader": "^6.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "karmatic": "^2.0.0",
+    "microbundle": "^0.12.3",
+    "npm-merge-driver-install": "^1.1.1",
+    "prettier": "2.0.5",
+    "typescript": "3.9.7",
+    "webpack": "^4.44.1"
+  }
+}
