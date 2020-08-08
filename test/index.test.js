@@ -13,7 +13,6 @@ describe('loadx', () => {
 			const element = await req;
 
 			expect(element.tagName).toBe('SCRIPT');
-			expect(element.hasAttribute('async')).toBeTruthy();
 			expect(element.getAttribute('src')).toBe(url);
 			expect(window.test).toBe(1);
 		});

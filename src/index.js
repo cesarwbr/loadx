@@ -12,7 +12,7 @@
 /** */
 export default (function () {
 	/** @public @type {BodylessMethod} */
-	loadx.js = (url) => loadx('script', 'body', { async: true, src: url });
+	loadx.js = (url) => loadx('script', 'body', { src: url });
 
 	/** @public @type {BodylessMethod} */
 	loadx.css = (url) => loadx('link', 'head', { type: 'text/css', rel: 'stylesheet', href: url });

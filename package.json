@@ -1,7 +1,7 @@
 {
   "name": "loadx",
   "version": "0.0.1",
-  "description": "Load image, video, CSS, and JavaScript files, using the Promise API,",
+  "description": "Load image, CSS, and JavaScript files, using the Promise API.",
   "source": "src/index.js",
   "main": "dist/loadx.js",
   "umd:main": "dist/loadx.umd.js",
@@ -61,7 +61,6 @@
     "eslint": "^7.6.0",
     "eslint-config-developit": "^1.2.0",
     "eslint-config-prettier": "6.11.0",
-    "file-loader": "^6.0.0",
     "isomorphic-fetch": "^2.2.1",
     "karmatic": "^2.0.0",
     "microbundle": "^0.12.3",
