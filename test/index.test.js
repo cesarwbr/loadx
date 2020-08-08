@@ -91,4 +91,17 @@ describe('loadx', () => {
 			);
 		});
 	});
+
+	describe('cache', () => {
+		it('should return cache result', async () => {
+			const url = window.URL.createObjectURL(jsFile);
+			await loadx.js(url);
+
+			const element = await loadx.js(url);
+
+			expect(element.tagName).toBe('SCRIPT');
+			expect(element.getAttribute('src')).toBe(url);
+			expect(window.test).toBe(1);
+		});
+	});
 });

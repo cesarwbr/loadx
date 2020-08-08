@@ -9,8 +9,16 @@
  * @type {(url: string) => Promise<HTMLElement>}
  */
 
+/**
+ * @typedef Cache
+ * @type {{[attrsStr: string]: HTMLElement }}
+ */
+
 /** */
 export default (function () {
+	/** @private @type {Cache} */
+	const cache = {};
+
 	/** @public @type {BodylessMethod} */
 	loadx.js = (url) => loadx('script', 'body', { src: url });
 
@@ -30,10 +38,17 @@ export default (function () {
 	 */
 	function loadx(tag, parent, attrs) {
 		return new Promise(function (resolve, reject) {
+			const cachedResult = getCachedResult(attrs);
+
+			if (cachedResult !== null) {
+				return resolve(cachedResult);
+			}
+
 			let element = document.createElement(tag);
 
 			element.onload = function () {
 				resolve(element);
+				setCacheResult(attrs, element);
 			};
 
 			element.onerror = function (oError) {
@@ -47,6 +62,36 @@ export default (function () {
 
 			document[parent].appendChild(element);
 		});
+	}
+
+	/**
+	 * Get cached result
+	 * @private
+	 * @param {Attributes} attrs
+	 * @returns {HTMLElement | null}
+	 */
+	function getCachedResult(attrs) {
+		const attrsStr = JSON.stringify(attrs);
+
+		const cacheValue = cache[attrsStr];
+		if (typeof cacheValue !== 'undefined') {
+			return cacheValue;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Set cache result
+	 * @private
+	 * @param {Attributes} attrs
+	 * @param {HTMLElement} element
+	 * @returns {void}
+	 */
+	function setCacheResult(attrs, element) {
+		const attrsStr = JSON.stringify(attrs);
+
+		cache[attrsStr] = element;
 	}
 
 	return loadx;
