@@ -1,6 +1,6 @@
 # loadx [![npm](https://img.shields.io/npm/v/workerize.svg?style=flat)](https://www.npmjs.org/package/workerize) [![travis](https://travis-ci.org/developit/workerize.svg?branch=master)](https://travis-ci.org/developit/workerize)
 
-> This super simple loader allows for loading of image, CSS, and JavaScript files, using the [Promise API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), and fires a callback upon success or failure.
+> Simple asset loader that allows loading of image, CSS, and JavaScript files, using the [Promise API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), and fires a callback upon success or failure.
 
 - 🚚 Load **JS**, **CSS** or **Image**
 - 🚀 Cache results
