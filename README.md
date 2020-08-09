@@ -18,7 +18,7 @@ $ npm install --save loadx
 ```js
 import loadx from 'loadx';
 
-async function getUser() {
+async function loadResources() {
 	// loading a JavaScript resource
 	await loadx.js('https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js');
 

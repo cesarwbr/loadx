@@ -10,6 +10,11 @@
  */
 
 /**
+ * @typedef BodylessParentMethod
+ * @type {(url: string, parent?: HTMLElement) => Promise<HTMLElement>}
+ */
+
+/**
  * @typedef Cache
  * @type {{[attrsStr: string]: HTMLElement }}
  */
@@ -20,24 +25,28 @@ export default (function () {
 	const cache = {};
 
 	/** @public @type {BodylessMethod} */
-	loadx.js = (url) => loadx('script', 'body', { src: url });
+	loadx.js = (url) => loadx('script', document.body, { src: url });
 
 	/** @public @type {BodylessMethod} */
-	loadx.css = (url) => loadx('link', 'head', { type: 'text/css', rel: 'stylesheet', href: url });
+	loadx.css = (url) => loadx('link', document.head, { type: 'text/css', rel: 'stylesheet', href: url });
 
-	/** @public @type {BodylessMethod} */
-	loadx.img = (url) => loadx('img', 'body', { src: url });
+	/** @public @type {BodylessParentMethod} */
+	loadx.img = (url, parent) => loadx('img', getParent(parent), { src: url });
 
 	/**
 	 * Load different file types
 	 * @public
 	 * @param {string} tag
-	 * @param {string} parent
+	 * @param {HTMLElement | null} parent
 	 * @param {Attributes} attrs
 	 * @returns {Promise<HTMLElement>}
 	 */
 	function loadx(tag, parent, attrs) {
 		return new Promise(function (resolve, reject) {
+			if (parent === null || !(parent instanceof HTMLElement)) {
+				return reject(new Error('Parent not found.'));
+			}
+
 			const cachedResult = getCachedResult(attrs);
 
 			if (cachedResult !== null) {
@@ -60,7 +69,7 @@ export default (function () {
 				element[key] = attrs[key];
 			});
 
-			document[parent].appendChild(element);
+			parent.appendChild(element);
 		});
 	}
 
@@ -92,6 +101,20 @@ export default (function () {
 		const attrsStr = JSON.stringify(attrs);
 
 		cache[attrsStr] = element;
+	}
+
+	/**
+	 * Get parent container
+	 * @private
+	 * @param {HTMLElement | undefined} parent
+	 * @returns {HTMLElement | null}
+	 */
+	function getParent(parent) {
+		if (parent === undefined) {
+			return document.body;
+		}
+
+		return parent;
 	}
 
 	return loadx;

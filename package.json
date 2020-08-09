@@ -1,6 +1,6 @@
 {
   "name": "loadx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Load image, CSS, and JavaScript files, using the Promise API.",
   "source": "src/index.js",
   "main": "dist/loadx.js",

@@ -3,6 +3,17 @@ import { jsFile, cssFile, imgFile } from './fixtures/examples';
 import loadx from '../src/index';
 
 describe('loadx', () => {
+	let oldDocumentHead, oldDocumentBody;
+	beforeEach(() => {
+		oldDocumentHead = document.head.innerHTML;
+		oldDocumentBody = document.body.innerHTML;
+	});
+
+	afterEach(() => {
+		document.head.innerHTML = oldDocumentHead;
+		document.body.innerHTML = oldDocumentBody;
+	});
+
 	describe('loadx.js()', () => {
 		it('should load a js file', async () => {
 			const url = window.URL.createObjectURL(jsFile);
@@ -87,6 +98,36 @@ describe('loadx', () => {
 			expect(spy).toHaveBeenCalledWith(
 				jasmine.objectContaining({
 					message: `The asset ${window.location.origin}/foo.png didn't load correctly.`
+				})
+			);
+		});
+
+		it('should load a img file to a specific container', async () => {
+			const container = document.createElement('div');
+			container.classList.add('container');
+			document.body.appendChild(container);
+
+			const req = loadx.img(imgFile, container);
+
+			expect(req).toBeInstanceOf(Promise);
+
+			const element = await req;
+
+			expect(element.tagName).toBe('IMG');
+			expect(element.getAttribute('src')).toBe(imgFile);
+		});
+
+		it('should throw an error when cannot find the parent', async () => {
+			const req = loadx.img(imgFile, null);
+
+			expect(req).toBeInstanceOf(Promise);
+
+			const spy = jasmine.createSpy();
+			await req.catch(spy);
+			expect(spy).toHaveBeenCalledTimes(1);
+			expect(spy).toHaveBeenCalledWith(
+				jasmine.objectContaining({
+					message: 'Parent not found.'
 				})
 			);
 		});
