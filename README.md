@@ -22,17 +22,15 @@ async function getUser() {
 	// loading a JavaScript resource
 	await loadx.js('https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js');
 
-	// from here you can start using axios normally
+	// from here, you can start using axios regularly
 	const user = await axios.get('/user?ID=12345');
 
-	// you can do the same thing with CSS
+	// you can load CSS...
 	await loadx.css('https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css');
 
-	// and with image and receive the element
+	// ...and image as well
 	const imageElement = await loadx.img('https://picsum.photos/200/300');
 }
-
-getUser();
 ```
 
 ### License
