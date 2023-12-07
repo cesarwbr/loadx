@@ -6,12 +6,12 @@
 
 /**
  * @typedef BodylessMethod
- * @type {(url: string) => Promise<HTMLElement>}
+ * @type {(url: string, options?: {[name: string]: string | boolean}) => Promise<HTMLElement>}
  */
 
 /**
  * @typedef BodylessParentMethod
- * @type {(url: string, parent?: HTMLElement) => Promise<HTMLElement>}
+ * @type {(url: string, parent?: HTMLElement, options?: {[name: string]: string | boolean}) => Promise<HTMLElement>}
  */
 
 /**
@@ -25,13 +25,13 @@ export default (function () {
 	const cache = {};
 
 	/** @public @type {BodylessMethod} */
-	loadx.js = (url) => loadx('script', document.body, { src: url });
+	loadx.js = (url, options = {}) => loadx('script', document.body, { src: url, ...options });
 
 	/** @public @type {BodylessMethod} */
-	loadx.css = (url) => loadx('link', document.head, { type: 'text/css', rel: 'stylesheet', href: url });
+	loadx.css = (url, options = {}) => loadx('link', document.head, { type: 'text/css', rel: 'stylesheet', href: url, ...options });
 
 	/** @public @type {BodylessParentMethod} */
-	loadx.img = (url, parent) => loadx('img', getParent(parent), { src: url });
+	loadx.img = (url, parent, options = {}) => loadx('img', getParent(parent), { src: url, ...options });
 
 	/**
 	 * Load different file types
